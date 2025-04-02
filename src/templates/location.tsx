@@ -242,6 +242,13 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
           currAddress={address.line1}
         />
       </article>
+      
+      
+      
+      
+      
+      
+      
       {/* Hero Section */}
       <section className="centered-container flex flex-col md:h-[400px] md:flex-row md:justify-between gap-4 md:gap-0">
         <article className="flex flex-col w-full md:w-1/2 gap-3 md:gap-4">
@@ -282,6 +289,17 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
 
 
       </section>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       {/* NAP Section */}
       <section className="bg-accent">
         <section className="centered-container  ">
@@ -355,6 +373,15 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       </section>
 
+      
+      
+      
+      
+      
+      
+      
+      
+      
       {/* About Section */}
       <section className="centered-container">
         <section className="flex flex-col md:h-[400px] md:flex-row md:justify-between gap-8 md:gap-16">
@@ -379,6 +406,12 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       </section>
 
+           
+           
+           
+           
+           
+           
             {/* Featured Products */}
             {c_relatedProducts && (
         <section className="bg-accent">
@@ -389,6 +422,16 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
           />
         </section>
       )}
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
       {/* <section className="bg-accent">
         <Testimonials />
       </section> */}
@@ -410,6 +453,13 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       )}
 
+    
+    
+    
+    
+    
+    
+    
       {/* Recent Reviews */}
       <section className="bg-accent ">
         <section className="centered-container md:space-y-16">
@@ -437,6 +487,14 @@ const Location: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       )}
 
+    
+    
+    
+    
+    
+    
+    
+    
       {/* Featured Promo Section */}
       <section className="centered-container">
         <section className="flex flex-col md:h-[400px] md:flex-row md:justify-between gap-4 md:gap-16">
