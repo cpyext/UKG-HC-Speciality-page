@@ -18,6 +18,7 @@ import { format_date } from "../utils/reusableFunctions";
 import BreadCrumbs from "../components/breadCrumbs";
 import ScrollToTop from "../components/scrollToTop";
 import AnnouncementBanner from "../components/AnnouncementComponent/Announcement";
+import Blogs from "../components/relatedSections/Blogs";
 
 export const config: TemplateConfig = {
   stream: {
@@ -27,6 +28,8 @@ export const config: TemplateConfig = {
       "uid",
       "meta",
       "name",
+      "address",
+      "description",
       "slug",
       "c_image",
       "c_shortDescriptionV2",
@@ -34,13 +37,27 @@ export const config: TemplateConfig = {
       "bodyV2",
       "richTextDescriptionV2",
       "primaryPhoto",
-      "c_relatedBlogs.name",
-      "c_relatedBlogs.headshot",
-      "c_relatedBlogs.address",
-      "c_relatedBlogs.mainPhone",
-      "c_relatedBlogs.meta",
-      "c_relatedBlogs.slug",
-      "c_relatedBlogs.id",
+      "taxonomy_relatedConditions.name",
+      "taxonomy_relatedConditions.headshot",
+      "taxonomy_relatedConditions.address",
+      "taxonomy_relatedConditions.mainPhone",
+      "taxonomy_relatedConditions.meta",
+      "taxonomy_relatedConditions.slug",
+      "taxonomy_relatedConditions.id",
+      "c_relatedProfessionals.taxonomy_relatedConditions.id",
+      "c_relatedProfessionals.taxonomy_relatedConditions.name",
+      "c_relatedProfessionals.taxonomy_relatedConditions.primaryPhoto",
+      "c_relatedProfessionals.taxonomy_relatedConditions.emails",
+      "c_relatedProfessionals.taxonomy_relatedConditions.bodyV2",
+      "c_relatedProfessionals.taxonomy_relatedConditions.slug",
+      "c_relatedProfessionals.taxonomy_relatedConditions.datePosted",
+      "taxonomy_relatedConditions.name",
+      "taxonomy_relatedConditions.bodyV2",
+      "taxonomy_relatedConditions.shortDescriptionV2",
+      "taxonomy_relatedConditions.primaryPhoto",
+      "taxonomy_relatedConditions.c_author",
+      "taxonomy_relatedConditions.datePosted",
+      "taxonomy_relatedConditions.slug",
       "parentProduct.name",
       "parentProduct.slug",
       "parentProduct.primaryPhoto",
@@ -53,7 +70,7 @@ export const config: TemplateConfig = {
       "closed"
     ],
     filter: {
-      entityTypes: ["ce_blog", "product"],
+      entityTypes: ["taxonomy_specialty"],
       savedFilterIds: ["1401364440"],
     },
     localization: {
@@ -65,8 +82,9 @@ export const config: TemplateConfig = {
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   return document.slug
     ? document.slug
-    : `${document.locale}/${document.name.replaceAll(" ", "-")}-${document.id.toString()}`;
-
+    : `${document.locale}/${document.address.region}/${document.address.city}/${
+        document.address.line1
+      }-${document.id.toString()}`;
 };
 
 /**
@@ -80,14 +98,14 @@ export const getHeadConfig: GetHeadConfig<
   TemplateRenderProps
 > = (): HeadConfig => {
   return {
-    title: "FINS | InsightsAndProducts",
+    title: "HC | Speciality Page",
     charset: "UTF-8",
     viewport: "width=device-width, initial-scale=1",
     tags: [
       {
         type: "meta",
         attributes: {
-          name: "description",
+          name: "richTextDescriptionV2",
           content: "Static page example meta description.",
         },
       },
@@ -95,7 +113,7 @@ export const getHeadConfig: GetHeadConfig<
   };
 };
 
-const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
+const Speciality: Template<TemplateRenderProps> = ({ document }) => {
   const {
     __meta,
     _site,
@@ -108,14 +126,22 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
     shortDescriptionV2,
     meta,
     slug,
-    c_relatedBlogs,
+    taxonomy_relatedConditions,
     parentProduct,
     datePosted,
     c_parentEntityType,
     c_category,
-    closed
+    closed,
+    address,
+    description,
+
+
   } = document;
 
+ 
+
+ 
+ 
   return (
     <PageLayout _site={_site} templateData={{ __meta, document }}>
       {/* Closed Banner */}
@@ -129,17 +155,49 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
           </article>
         </section>
       )}
-      <AnnouncementBanner isVisibleByDefault={true} position="left"/>
-      <article className="centered-container !py-4 hidden md:block">
+      <AnnouncementBanner isVisibleByDefault={true} position="left" />
+
+
+
+      {/* About Section */}
+      <section className="centered-container">
+        <section className="flex flex-col md:h-[400px] md:flex-row md:justify-between gap-8 md:gap-16">
+          {/* <Image
+            image={primaryPhoto[0]}
+            className="w-full md:!w-1/2 max-w-none"
+          /> */}
+          <article className="flex flex-col w-full md:w-1/2 gap-8">
+            <h2 className="text-2xl md:text-4xl font-bold">
+              About {name}
+            </h2>
+             (
+              <ResponseComponent response={richTextDescriptionV2} />
+            )
+            
+            <nav className="flex flex-col md:flex-row gap-4">
+              <button className="font-bold md:text-lg bg-secondary text-white w-full md:w-fit p-2  md:px-4 flex items-center justify-center border rounded-full">
+                Get Directions
+              </button>
+              <button className="border-2 font-bold text-secondary border-secondary md:text-lg w-full md:w-fit p-2  md:px-4 flex items-center justify-center rounded-full">
+                Call us
+              </button>
+            </nav>
+          </article>
+        </section>
+      </section>
+
+
+
+
+      {/* <article className="centered-container !py-4 hidden md:block">
         <BreadCrumbs
           data={dm_directoryParents_hc_hf_directory}
           currAddress={address.line1}
         />
-      </article>
+      </article> */}
       <article
-        className={` ${
-          meta.entityType.id === "product" ? `bg-primary` : `bg-accent`
-        }`}
+        className={` ${meta.entityType.id === "product" ? `bg-primary` : `bg-accent`
+          }`}
       >
         <section
           className="centered-container flex gap-4 md:gap-8 flex-col md:flex-row justify-between text-left !space-y-0 !py-2 w-full md:!px-40"
@@ -172,19 +230,18 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
           </footer>
         </section>
         <section className="centered-container !py-4 md:relative mx-auto">
-          <Image
+          {/* <Image
             image={c_image || primaryPhoto}
             className="md:max-h-[500px] w-full rounded-lg"
-          />
+          /> */}
           <section
             className={`md:rounded-t-lg md:bg-primary md:relative md:-top-48 gap-2 md:gap-8 md:mx-8 justify-between m-auto text-pretty font-medium 
         text-sm sm:text-xl/8 py-2 md:py-8 lg:py-2 flex flex-col md:flex-row md:px-8`}
             aria-labelledby="content-section-heading"
           >
             <header
-              className={`${
-                c_relatedBlogs || parentProduct ? `md:!w-4/5` : `md:w-full`
-              } flex flex-col prose !max-w-none w-full`}
+              className={`${taxonomy_relatedConditions || parentProduct ? `md:!w-4/5` : `md:w-full`
+                } flex flex-col prose !max-w-none w-full`}
             >
               <section
                 className="flex flex-wrap gap-1 items-center md:gap-4 text-sm md:text-base -mb-12"
@@ -202,11 +259,10 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
                   </span>
                 )}
               </section>
-              {bodyV2 ? (
-                <ResponseComponent response={bodyV2} />
-              ) : (
-                <ResponseComponent response={richTextDescriptionV2} />
-              )}
+
+
+
+
               <footer className="md:pb-6 hidden md:block ">
                 <Cta
                   cta={{ link: "", linkType: "Phone", label: "Call us" }}
@@ -215,6 +271,8 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
                 />
               </footer>
             </header>
+
+
             <aside className="w-full md:w-1/5 flex flex-col gap-2  mt-2">
               {parentProduct && (
                 <RelatedData
@@ -223,8 +281,8 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
                   name={name}
                 />
               )}
-              {c_relatedBlogs && (
-                <RelatedData relatedData={c_relatedBlogs} name={name} />
+              {taxonomy_relatedConditions && (
+                <RelatedData relatedData={taxonomy_relatedConditions} name={name} />
               )}
             </aside>
             <footer className="md:pb-6 md:hidden block">
@@ -242,4 +300,4 @@ const InsightsAndProducts: Template<TemplateRenderProps> = ({ document }) => {
   );
 };
 
-export default InsightsAndProducts;
+export default Speciality;
