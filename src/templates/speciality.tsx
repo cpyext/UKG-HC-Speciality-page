@@ -238,8 +238,8 @@ const Speciality: Template<TemplateRenderProps> = ({ document }) => {
         {/* 🧩 Meta Info + Related */}
         <section className="centered-container !py-4 md:relative mx-auto">
           <section
-            className={`md:rounded-t-lg md:bg-primary md:relative md:-top-48 gap-2 md:gap-8 md:mx-8 justify-between m-auto text-pretty font-medium 
-            text-sm sm:text-xl/8 py-2 md:py-8 lg:py-2 flex flex-col md:flex-row md:px-8`}
+            // className={`md:rounded-t-lg md:bg-primary md:relative md:-top-48 gap-2 md:gap-8 md:mx-8 justify-between m-auto text-pretty font-medium 
+            // text-sm sm:text-xl/8 py-2 md:py-8 lg:py-2 flex flex-col md:flex-row md:px-8`}
             aria-labelledby="content-section-heading"
           >
             <header
@@ -260,11 +260,11 @@ const Speciality: Template<TemplateRenderProps> = ({ document }) => {
               </section>
 
               <footer className="md:pb-6 hidden md:block">
-                <Cta
+                {/* <Cta
                   cta={{ link: "", linkType: "Phone", label: "Call us" }}
                   ctaType={"secondaryCta"}
                   otherStyles={"rounded-full md:!w-1/2 no-underline"}
-                />
+                /> */}
               </footer>
             </header>
 
@@ -296,7 +296,7 @@ const Speciality: Template<TemplateRenderProps> = ({ document }) => {
               <h2 className="text-2xl md:text-3xl font-bold">Articles</h2>
               <a
                 href="/blogs"
-                className="text-sm bg-primary text-white font-semibold px-4 py-2 rounded-full"
+                className="font-bold md:text-lg bg-secondary text-white w-full md:w-auto p-3 px-6 flex items-center justify-center border rounded-full"
               >
                 Find More
               </a>
@@ -323,8 +323,13 @@ const Speciality: Template<TemplateRenderProps> = ({ document }) => {
                   <h3 className="text-lg font-bold mb-2">{name}</h3>
 
                   <div className="text-sm text-gray-600 mb-4">
-                    <ResponseComponent response={shortDescriptionV2} />
-                  </div>
+  <ResponseComponent
+    response={
+      shortDescriptionV2 ||
+      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    }
+  />
+</div>
 
                   <a
                     href={blog.primaryCTA?.link || "#"}
