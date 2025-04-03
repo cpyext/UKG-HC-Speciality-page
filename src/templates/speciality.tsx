@@ -1,6 +1,6 @@
-
- {/* Imports */}
-
+{
+  /* Imports */
+}
 
 import {
   GetHeadConfig,
@@ -14,7 +14,7 @@ import {
 } from "@yext/pages";
 
 import PageLayout from "../components/pageLayout";
-import { Image } from "@yext/pages-components";
+import { Address, Image } from "@yext/pages-components";
 import { IoWarningOutline } from "react-icons/io5";
 import Cta from "../components/cta";
 import ResponseComponent from "../components/ResponseComponent";
@@ -27,7 +27,9 @@ import AnnouncementBanner from "../components/AnnouncementComponent/Announcement
 import Blogs from "../components/relatedSections/Blogs";
 import { format_phone, getRandomObjects } from "../utils/reusableFunctions";
 
-{/* Stream Configuration */}
+{
+  /* Stream Configuration */
+}
 
 export const config: TemplateConfig = {
   stream: {
@@ -44,22 +46,22 @@ export const config: TemplateConfig = {
       "c_secondaryCTA",
       "c_relatedLocations.name",
       "c_relatedLocations.address",
-      "c_relatedBlogs",
+
       "c_relatedBlogs.name",
       "c_relatedBlogs.shortDescriptionV2",
       "c_relatedBlogs.primaryPhoto",
       "taxonomy_relatedConditions.name",
-      "taxonomy_relatedConditions.shortDescriptionV2",
+      "taxonomy_relatedConditions.slug",
       "taxonomy_relatedReasonsForVisit.name",
+      "taxonomy_relatedReasonsForVisit.slug",
       "taxonomy_relatedProcedures.name",
+      "taxonomy_relatedProcedures.slug",
       "c_relatedProfessionals.name",
       "c_relatedProfessionals.c_medicalProfessionalType",
       "c_relatedProfessionals.mainPhone",
       "c_relatedProfessionals.emails",
-      "c_relatedProfessionals.name",
+
       "c_relatedProfessionals.address",
-      
-      
     ],
     filter: {
       entityTypes: ["taxonomy_specialty"],
@@ -71,7 +73,9 @@ export const config: TemplateConfig = {
   },
 };
 
-{/* Slug/URL Path */}
+{
+  /* Slug/URL Path */
+}
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   return document.slug
@@ -83,7 +87,9 @@ export const getRedirects: GetRedirects<TemplateProps> = ({ document }) => {
   return [`index-old/${document.id.toString()}`];
 };
 
-{/* Head Config */}
+{
+  /* Head Config */
+}
 
 export const getHeadConfig: GetHeadConfig<
   TemplateRenderProps
@@ -104,7 +110,9 @@ export const getHeadConfig: GetHeadConfig<
   };
 };
 
-{/* Specialty Component */}
+{
+  /* Specialty Component */
+}
 
 const Specialty: Template<TemplateRenderProps> = ({ document }) => {
   const {
@@ -123,37 +131,26 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
     taxonomy_relatedReasonsForVisit,
     taxonomy_relatedProcedures,
     taxonomy_relatedConditions,
-
   } = document;
 
-  
-  
-  
   const breadcrumbsData = [
     { id: "home", name: "Home", slug: "/" },
     { id: "specialties", name: "Specialties", slug: "/specialties" },
     {
       id: slug || "unknown-specialty",
       name: name || "Specialty",
-      slug: slug ? `/specialty/${slug}` : "#"
-    }
+      slug: slug ? `/specialty/${slug}` : "#",
+    },
   ];
-  
 
+  {
+    /* Output */
+  }
 
-
-  
-  {/* Output */}
- 
   return (
     <PageLayout _site={_site} templateData={{ __meta, document }}>
-     
-     
-     
-     
-     
       {/* Announcement Bar */}
-      {closed && (
+      {/* {closed && (
         <section className="w-full bg-tertiary">
           <article className="centered-container !py-0">
             <p className="flex text-base items-center h-20 md:h-14 my-auto text-white">
@@ -162,14 +159,14 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
             </p>
           </article>
         </section>
-      )}
+      )} */}
+
+
+      {/* <a href="slug">name</a> */}
 
       <AnnouncementBanner isVisibleByDefault={true} position="left" />
-     
-     
-     
-     
-     {/* Breadcrumbs */}
+
+      {/* Breadcrumbs */}
       {/* <article className="centered-container !py-4 hidden md:block">
         <BreadCrumbs
           data={dm_directoryParents_hc_hf_directory}
@@ -177,12 +174,6 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
         />
       </article> */}
       <BreadCrumbs data={breadcrumbsData} currAddress={name} />
-
-      
-
-
-
-      
 
       {/*About Section */}
       <section className="centered-container">
@@ -213,10 +204,6 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       </section>
 
-     
-     
-     
-     
       {/* Main Info Section */}
       <article
         className={` ${meta.entityType.id === "product" ? `bg-primary` : `bg-accent`}`}
@@ -243,38 +230,14 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
         </section>
       </article>
 
-     
-     
-      
+      {/* What we Treat Section - Specialities */}
 
-     
-     {/* What we Treat Section - Specialities */}
+      {/* Treatments We Offer Section - SubSpecialities */}
 
+      {/* Reasons to Visit Section */}
 
+      {/* Conditions Specialists Section - Related HC Professionals */}
 
-
-    {/* Treatments We Offer Section - SubSpecialities */}
-
-
-     
-     
-     
-     
-    {/* Reasons to Visit Section */}
-     
-     
-
-
-
-     
-    {/* Conditions Specialists Section - Related HC Professionals */}
-
-
-
-
-
-     
-     
       {/* Related Locations Section */}
 
       {c_relatedLocations && c_relatedLocations.length > 0 && (
@@ -294,16 +257,20 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
 
             <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {(c_relatedLocations as Location[]).map(
-                (location, index: number) => (
+                (location: any, index: number) => (
                   <article
                     key={index}
                     className="bg-gray-50 rounded-lg shadow p-6 flex flex-col justify-between"
                   >
                     {/* Location Name */}
-                    <h3 className="text-lg font-bold mb-2">{c_relatedLocations.name}</h3>
+                    <h3 className="text-lg font-bold mb-2">{location.name}</h3>
 
                     {/* Address */}
-                    <p className="text-sm text-gray-700 mb-4">{c_relatedLocations.address}</p>
+                    {/* <p className="text-sm text-gray-700 mb-4">{location.address.line1}</p> */}
+                    <Address
+                      address={location.address}
+                      lines={[["line1", "city", ",", "region", "postalCode"]]}
+                    />
 
                     {/* <a
                       className="text-secondary text-base font-bold decoration-2 underline-offset-4  underline"
@@ -315,70 +282,66 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
                       <HiOutlinePhone className="h-4 w-4 text-secondary" />
                       <p>{format_phone(mainPhone)}</p>
                     </span> */}
-
-                    
                   </article>
                 )
               )}
             </section>
 
+            {/* 📚 Related Articles Section */}
+            {c_relatedBlogs && c_relatedBlogs.length > 0 && (
+              <section className="bg-gray-100 py-10">
+                <div className="centered-container">
+                  <header className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl md:text-3xl font-bold">Articles</h2>
+                    <a
+                      href="/blogs"
+                      className="font-bold md:text-lg bg-secondary text-white w-full md:w-auto p-3 px-6 flex items-center justify-center border rounded-full"
+                    >
+                      Find More
+                    </a>
+                  </header>
 
+                  <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {c_relatedBlogs.map((blog, index) => (
+                      <article
+                        key={index}
+                        className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
+                      >
+                        {blog.primaryPhoto ? (
+                          <Image
+                            image={blog.primaryPhoto}
+                            className="w-full h-40 object-cover rounded-md mb-4"
+                          />
+                        ) : (
+                          <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded-md mb-4">
+                            <span className="text-gray-500">No Image</span>
+                          </div>
+                        )}
 
-{/* 📚 Related Articles Section */}
-      {c_relatedBlogs && c_relatedBlogs.length > 0 && (
-        <section className="bg-gray-100 py-10">
-          <div className="centered-container">
-            <header className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold">Articles</h2>
-              <a
-                href="/blogs"
-                className="font-bold md:text-lg bg-secondary text-white w-full md:w-auto p-3 px-6 flex items-center justify-center border rounded-full"
-              >
-                Find More
-              </a>
-            </header>
+                        <h3 className="text-lg font-bold mb-2">{name}</h3>
 
-            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {c_relatedBlogs.map((blog, index) => (
-                <article
-                  key={index}
-                  className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
-                >
-                  {blog.primaryPhoto ? (
-                    <Image
-                      image={blog.primaryPhoto}
-                      className="w-full h-40 object-cover rounded-md mb-4"
-                    />
-                  ) : (
-                    <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded-md mb-4">
-                      <span className="text-gray-500">No Image</span>
-                    </div>
-                  )}
+                        <div className="text-sm text-gray-600 mb-4">
+                          <ResponseComponent
+                            response={
+                              blog.shortDescriptionV2 ||
+                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            }
+                          />
+                        </div>
 
-                  <h3 className="text-lg font-bold mb-2">{name}</h3>
-
-                  <div className="text-sm text-gray-600 mb-4">
-                    <ResponseComponent
-                      response={
-                        blog.shortDescriptionV2 ||
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      }
-                    />
-                  </div>
-
-                  <a
-                    href={blog.primaryCTA?.link || "#"}
-                    className="text-white bg-primary px-4 py-2 text-sm rounded-full w-fit self-start hover:bg-primary/90"
-                  >
-                    {blog.primaryCTA?.label || "Learn More"}
-                  </a>
-                </article>
-              ))}
-            </section>
+                        <a
+                          href={blog.primaryCTA?.link || "#"}
+                          className="text-white bg-primary px-4 py-2 text-sm rounded-full w-fit self-start hover:bg-primary/90"
+                        >
+                          {blog.primaryCTA?.label || "Learn More"}
+                        </a>
+                      </article>
+                    ))}
+                  </section>
+                </div>
+              </section>
+            )}
           </div>
-        </section>
-      )}
-   </div>
         </section>
       )}
       <ScrollToTop />
