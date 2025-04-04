@@ -145,6 +145,22 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
     },
   ];
 
+  interface RelatedBlog {
+    name: string;
+    primaryPhoto?: {
+      url: string;
+      alternateText?: string;
+      height?: number;
+      width?: number;
+    };
+    shortDescriptionV2?: string;
+    primaryCTA?: {
+      label: string;
+      link: string;
+    };
+  }
+  
+
   
 
   return (
@@ -173,7 +189,10 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
           currAddress={address.line1}
         />
       </article> */}
-      <BreadCrumbs data={breadcrumbsData} currAddress={name} />
+      <section className="centered-container mt-px">
+  <BreadCrumbs data={breadcrumbsData} currAddress={name} />
+</section>
+     
 
       {/*About Section */}
       <section className="centered-container">
@@ -557,60 +576,85 @@ const Specialty: Template<TemplateRenderProps> = ({ document }) => {
 
 
 
-            {/* Related Articles Section */}
-            {c_relatedBlogs && c_relatedBlogs.length > 0 && (
-              <section className="bg-gray-100 py-10">
-                <div className="centered-container">
-                  <header className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl md:text-3xl font-bold">Articles</h2>
-                    <a
-                      href="/blogs"
-                      className="font-bold md:text-lg bg-secondary text-white w-full md:w-auto p-3 px-6 flex items-center justify-center border rounded-full"
-                    >
-                      Find More
-                    </a>
-                  </header>
+            {/* 📚 Related Articles Section */}
+{c_relatedBlogs && c_relatedBlogs.length > 0 && (
+  <section className="bg-gray-100 py-10">
+    <div className="centered-container">
+      <header className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold">Articles</h2>
+        <a
+          href="/blogs"
+          className="font-bold md:text-lg bg-secondary text-white w-full md:w-auto p-3 px-6 flex items-center justify-center border rounded-full"
+        >
+          Find More
+        </a>
+      </header>
 
-                  <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {c_relatedBlogs.map((blog, index) => (
-                      <article
-                        key={index}
-                        className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
-                      >
-                        {blog.primaryPhoto ? (
-                          <Image
-                            image={blog.primaryPhoto}
-                            className="w-full h-40 object-cover rounded-md mb-4"
-                          />
-                        ) : (
-                          <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded-md mb-4">
-                            <span className="text-gray-500">No Image</span>
-                          </div>
-                        )}
-
-                        <h3 className="text-lg font-bold mb-2">{name}</h3>
-
-                        <div className="text-sm text-gray-600 mb-4">
-                          <ResponseComponent
-                            response={
-                              blog.shortDescriptionV2 ||
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            }
-                          />
-                        </div>
-
-                        <a
-                          href={blog.primaryCTA?.link || "#"}
-                          className="text-white bg-primary px-4 py-2 text-sm rounded-full w-fit self-start hover:bg-primary/90"
-                        >
-                          {blog.primaryCTA?.label || "Learn More"}
-                        </a>
-                      </article>
-                    ))}
-                  </section>
-                </div>
-              </section>
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {(c_relatedBlogs as RelatedBlog[]).map((blog: RelatedBlog, index: number) => (
+          <article
+            key={index}
+            className="bg-white rounded-lg shadow p-4 flex flex-col justify-between"
+          >
+            {blog.primaryPhoto?.url ? (
+              
+              <Image
+              image={{
+                url: blog.primaryPhoto?.url || "",
+                alternateText: blog.primaryPhoto?.alternateText || blog.name,
+                height: blog.primaryPhoto?.height || 200, // Fallback height
+                width: blog.primaryPhoto?.width || 400,   // Fallback width
+              }}
+              className="w-full h-40 object-cover rounded-md mb-4"
+            />
+                
+            ) : (
+              <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded-md mb-4">
+                <span className="text-gray-500">No Image</span>
+              </div>
             )}
+
+            <h3 className="text-lg font-bold mb-2">{blog.name}</h3>
+
+            <div className="text-sm text-gray-600 mb-4">
+              <ResponseComponent
+                response={
+                  blog.shortDescriptionV2 ||
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                }
+              />
+            </div>
+
+            <a
+              href={blog.primaryCTA?.link || "#"}
+              className="text-white bg-primary px-4 py-2 text-sm rounded-full w-fit self-start hover:bg-primary/90"
+            >
+              {blog.primaryCTA?.label || "Learn More"}
+            </a>
+          </article>
+        ))}
+      </section>
+    </div>
+  </section>
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
         </section>
       )}
